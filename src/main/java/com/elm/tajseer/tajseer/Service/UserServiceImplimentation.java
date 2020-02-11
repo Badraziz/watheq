@@ -5,6 +5,8 @@ import com.elm.tajseer.tajseer.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImplimentation implements UserService {
 
@@ -15,6 +17,11 @@ private UserRepository userRepository ;
     @Override
     public String addUser(Users users) {
         userRepository.save(users);
-        return "Student added Successfully";
+        return "User added Successfully";
+    }
+
+    @Override
+    public List<Users> getAllUsers() {
+        return userRepository.findAll();
     }
 }
