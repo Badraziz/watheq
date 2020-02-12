@@ -2,6 +2,8 @@ package com.elm.tajseer.tajseer.Model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -9,84 +11,98 @@ public class Certificates {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  int CertificateId ;
+    private  int certificateId ;
     @Column
-    private String CertificateName ;
+    private String certificateName ;
+
+    private  enum  CertificateType{} ;
     @Column
-    private  Boolean CertificateType ;
+    private  String certificateDescription  ;
     @Column
-    private  String CertificateDescription  ;
+    private Date certificateData ;
+    private  enum  CertificateStaues{} ;
     @Column
-    private Date CertificateData ;
-    @Column
-    private  String CertificateStaues ;
-    @Column
-    private  String CertificateDocument ;
+    private  byte certificateDocument ;
 
 
-    @ManyToOne
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
-    private  Users users ;
+    private Users users;
 
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "organizationId")
+    private Organization organization;
+
+
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "certificates_shareds",
+            joinColumns = {@JoinColumn(name = "CertificateID")},
+            inverseJoinColumns = {@JoinColumn(name = "SharedID")}
+            )
+    private Set<Shared> shareds = new HashSet<Shared>();
 
 
     public Certificates(){
-
     }
 
     public int getCertificateId() {
-        return CertificateId;
+        return certificateId;
     }
 
     public void setCertificateId(int certificateId) {
-        CertificateId = certificateId;
+        this.certificateId = certificateId;
     }
 
     public String getCertificateName() {
-        return CertificateName;
+        return certificateName;
     }
 
     public void setCertificateName(String certificateName) {
-        CertificateName = certificateName;
-    }
-
-    public Boolean getCertificateType() {
-        return CertificateType;
-    }
-
-    public void setCertificateType(Boolean certificateType) {
-        CertificateType = certificateType;
+        this.certificateName = certificateName;
     }
 
     public String getCertificateDescription() {
-        return CertificateDescription;
+        return certificateDescription;
     }
 
     public void setCertificateDescription(String certificateDescription) {
-        CertificateDescription = certificateDescription;
+        this.certificateDescription = certificateDescription;
     }
 
     public Date getCertificateData() {
-        return CertificateData;
+        return certificateData;
     }
 
     public void setCertificateData(Date certificateData) {
-        CertificateData = certificateData;
+        this.certificateData = certificateData;
     }
 
-    public String getCertificateStaues() {
-        return CertificateStaues;
+    public byte getCertificateDocument() {
+        return certificateDocument;
     }
 
-    public void setCertificateStaues(String certificateStaues) {
-        CertificateStaues = certificateStaues;
+    public void setCertificateDocument(byte certificateDocument) {
+        this.certificateDocument = certificateDocument;
     }
 
-    public String getCertificateDocument() {
-        return CertificateDocument;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setCertificateDocument(String certificateDocument) {
-        CertificateDocument = certificateDocument;
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }

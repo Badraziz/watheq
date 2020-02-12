@@ -24,4 +24,14 @@ public class UserController {
     public List<Users> getAllUsers() {
         return userservice.getAllUsers();
     }
+
+    @PutMapping(value = "/UpdateUser/{userId}")
+    public Users updateUser(@RequestBody Users users, @PathVariable("userId") int userId) {
+        return userservice.updateUser(users, userId);
+    }
+
+    @DeleteMapping(value = "/DeleteUser/{userID}")
+    public void deleteUser(@PathVariable("userID") int userID) {
+        userservice.deleteUser(userID);
+    }
 }

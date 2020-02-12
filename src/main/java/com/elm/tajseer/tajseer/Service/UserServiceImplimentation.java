@@ -24,4 +24,21 @@ private UserRepository userRepository ;
     public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public Users getUser(int userId) {
+        return userRepository.findById(userId).get();
+    }
+
+    @Override
+    public Users updateUser(Users users, int userId) {
+        users.setUserId(userId);
+        return userRepository.save(users);
+    }
+
+    @Override
+    public void deleteUser(int userId) {
+        userRepository.deleteById(userId);
+    }
+
 }

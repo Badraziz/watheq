@@ -2,7 +2,10 @@ package com.elm.tajseer.tajseer.Model;
 
 
 import javax.persistence.*;
+import java.security.cert.Certificate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -21,18 +24,28 @@ public class Users {
     private String email ;
     @Column
     private String password ;
+    @Column
     private String nationalId ;
-    @ManyToOne
-    @JoinColumn(name = "authorityId")
-    private  Authority authority ;
 
 
-    @OneToMany(targetEntity = Certificates.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CertificateId", referencedColumnName = "CertificateId")
-    private  Certificates certificates ;
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Certificates> certificates = new ArrayList<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "AuthorityId")
+    private Authority authority;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "organizationId")
+    private Organization organization;
+
+
+
+    @OneToMany(mappedBy = "userShareds", cascade = CascadeType.ALL)
+    private List<Shared> shareds = new ArrayList<>();
+
 
     public Users() {
-
     }
 
     public int getUserId() {

@@ -1,10 +1,11 @@
 package com.elm.tajseer.tajseer.Model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table
 public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,6 +14,12 @@ public class Organization {
     private String organizationName ;
     @Column
     private  String organizationAddress ;
+
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    private List<Certificates> certificates = new ArrayList<>();
+
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
+    private List<Users> users = new ArrayList<>();
 
         public Organization() {
     }

@@ -1,6 +1,8 @@
 package com.elm.tajseer.tajseer.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table
 @Entity
@@ -14,9 +16,10 @@ public class Authority {
     @Column
     private  String authorityDescription ;
 
-    @OneToMany(targetEntity = Users.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
-    private  Users users ;
+
+
+    @OneToMany(mappedBy = "authority", cascade = CascadeType.ALL)
+    private List<Users> users = new ArrayList<>();
 
 
     public Authority() {
