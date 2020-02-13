@@ -1,5 +1,6 @@
 package com.elm.tajseer.tajseer.Model;
 
+import  java.sql.Blob ;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,17 +15,14 @@ public class Certificates {
     private  int certificateId ;
     @Column
     private String certificateName ;
-
     private  enum  CertificateType{} ;
     @Column
     private  String certificateDescription  ;
     @Column
     private Date certificateData ;
     private  enum  CertificateStaues{} ;
-    @Column
-    private  byte certificateDocument ;
-
-
+    @Lob
+    private  byte[]  certificateDocument ;
 
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -48,6 +46,12 @@ public class Certificates {
 
 
     public Certificates(){
+    }
+
+    public Certificates(String certificateName, String certificateDescription, byte[] certificateDocument) {
+        this.certificateName = certificateName;
+        this.certificateDescription = certificateDescription;
+        this.certificateDocument = certificateDocument;
     }
 
     public int getCertificateId() {
@@ -82,11 +86,11 @@ public class Certificates {
         this.certificateData = certificateData;
     }
 
-    public byte getCertificateDocument() {
+    public byte[] getCertificateDocument() {
         return certificateDocument;
     }
 
-    public void setCertificateDocument(byte certificateDocument) {
+    public void setCertificateDocument(byte[] certificateDocument) {
         this.certificateDocument = certificateDocument;
     }
 
@@ -104,5 +108,13 @@ public class Certificates {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public Set<Shared> getShareds() {
+        return shareds;
+    }
+
+    public void setShareds(Set<Shared> shareds) {
+        this.shareds = shareds;
     }
 }

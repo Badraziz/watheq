@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 @EnableJpaRepositories
 public interface CertificatesRepository extends JpaRepository <Certificates, Integer> {
-    @Override
-    List<Certificates> findAll();
+
 }
