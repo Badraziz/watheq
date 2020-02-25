@@ -1,5 +1,8 @@
 package com.elm.tajseer.tajseer.Model;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,8 @@ public class Organization {
     private String organizationName ;
     @Column
     private  String organizationAddress ;
+    @Column
+    private String organizationContact ;
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
     private List<Certificates> certificates = new ArrayList<>();
@@ -52,9 +57,9 @@ public class Organization {
         return organizationContact;
     }
 
-    public void setOrganizationContact(String organizationContact) {
+    public void setOrganizationContact() {
         this.organizationContact = organizationContact;
     }
 
-    private String organizationContact ;
+
 }

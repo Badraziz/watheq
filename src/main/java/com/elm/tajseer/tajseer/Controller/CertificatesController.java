@@ -26,9 +26,7 @@ public class CertificatesController {
     }
 
         @GetMapping(value = "/GetAllCertificates")
-
         public List<Certificates> getAllCertificates() {
-
             return certificatesService.getAllCertificates();
 
         }

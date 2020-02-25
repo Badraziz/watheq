@@ -1,7 +1,11 @@
 package com.elm.tajseer.tajseer.Model;
 
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,8 +24,9 @@ public class Users {
     private String PhoneNumber ;
     @Column
     private Date dateOfBirth ;
-    @Column
-    private String email ;
+    @Column(name = "email", unique = true)
+    @Email(message = "Please provide a valid e-mail")
+    private String email;
     @Column
     private String password ;
     @Column
@@ -102,5 +107,17 @@ public class Users {
 
     public void setNationalId(String nationalId) {
         this.nationalId = nationalId;
+    }
+
+    public Users(Organization organization) {
+        this.organization = organization;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }
