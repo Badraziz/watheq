@@ -5,6 +5,7 @@ import com.elm.tajseer.tajseer.Model.Users;
 import com.elm.tajseer.tajseer.Repository.OrganizationRepository;
 import com.elm.tajseer.tajseer.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ private OrganizationRepository organizationRepository ;
 
     @Override
     public String addIndividual(Users users) {
+        users.setPassword(new BCryptPasswordEncoder().encode(users.getPassword()));
         userRepository.save(users);
         return "Individual added Successfully";
     }

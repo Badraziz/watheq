@@ -17,7 +17,7 @@ public class TajseerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TajseerApplication.class, args);
 
-		System.out.println(new BCryptPasswordEncoder().encode("123"));
+		//System.out.println(user.setpassword(new BCryptPasswordEncoder().encode(user.getpassorwd()))new BCryptPasswordEncoder().encode("123"));
 	}
 
 }
