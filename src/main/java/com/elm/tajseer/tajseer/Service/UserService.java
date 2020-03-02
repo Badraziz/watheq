@@ -11,7 +11,7 @@ public interface UserService {
 
     public String addIndividual(Users users);
     public String addOrganization(Organization organization);
-    public  String addOrganization(Users users);
+    Organization findByOrganizationId(String organizationName);
     public List<Users> getAllUsers();
     public Users getUser(int userID);
     public Users updateUser(Users users, int userID);

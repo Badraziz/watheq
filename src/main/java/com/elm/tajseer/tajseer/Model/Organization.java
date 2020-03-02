@@ -19,6 +19,8 @@ public class Organization {
     private  String organizationAddress ;
     @Column
     private String organizationContact ;
+    @Column
+    private  String email ;
 
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
     private List<Certificates> certificates = new ArrayList<>();
@@ -61,5 +63,11 @@ public class Organization {
         this.organizationContact = organizationContact;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

@@ -7,9 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.security.cert.Certificate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table
@@ -24,13 +22,14 @@ public class Users {
     private String PhoneNumber ;
     @Column
     private Date dateOfBirth ;
-    @Column(name = "email", unique = true)
-    @Email(message = "Please provide a valid e-mail")
+    @Column
     private String email;
     @Column
     private String password ;
     @Column
     private String nationalId ;
+    @Column
+    private boolean enabled ;
 
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
@@ -39,6 +38,10 @@ public class Users {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "AuthorityId")
     private Authority authority;
+//
+//    @ManyToMany(mappedBy = "users", cascade = {CascadeType.ALL})
+//    private Authority authority;
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "organizationId")
@@ -51,6 +54,18 @@ public class Users {
 
 
     public Users() {
+    }
+
+
+    public Users(int userId, String fullName, String phoneNumber, Date dateOfBirth, String email, String password, String nationalId, boolean enabled) {
+        this.userId = userId;
+        this.fullName = fullName;
+        PhoneNumber = phoneNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.password = password;
+        this.nationalId = nationalId;
+        this.enabled = enabled;
     }
 
     public int getUserId() {
@@ -113,11 +128,44 @@ public class Users {
         this.organization = organization;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public Organization getOrganization() {
         return organization;
     }
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+
+    public List<Certificates> getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(List<Certificates> certificates) {
+        this.certificates = certificates;
+    }
+
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
+    public List<Shared> getShareds() {
+        return shareds;
+    }
+
+    public void setShareds(List<Shared> shareds) {
+        this.shareds = shareds;
     }
 }

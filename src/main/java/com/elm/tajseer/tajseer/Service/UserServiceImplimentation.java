@@ -29,11 +29,9 @@ private OrganizationRepository organizationRepository ;
     }
 
     @Override
-    public String addOrganization(Users users) {
-        userRepository.save(users);
-        return "Organization added Successfully";
+    public Organization findByOrganizationId(String organizationName) {
+        return organizationRepository.findByOrganizationId(organizationName);
     }
-
 
     @Override
     public List<Users> getAllUsers() {
