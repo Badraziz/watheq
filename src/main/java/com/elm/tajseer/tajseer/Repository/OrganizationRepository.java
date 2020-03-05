@@ -11,5 +11,5 @@ import java.util.List;
 
 @Repository
 public interface OrganizationRepository extends CrudRepository<Organization,String> {
-    Organization findByOrganizationId(String organizationName);
+    Organization findByOrganizationName(String organizationName);
 }

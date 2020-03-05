@@ -4,8 +4,7 @@ package com.elm.tajseer.tajseer.Model;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.security.cert.Certificate;
 import java.util.*;
 
@@ -16,21 +15,35 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId ;
+
     @Column
+    @Size(min = 3,message = "Too Short Name")
+    @Size(max = 30,message = "Too Long Name")
     private String fullName ;
+
     @Column
+   // @NotNull(message = "Phone Number Cannot be null.")
     private String PhoneNumber ;
+
     @Column
+   // @Past(message = "Date input is invalid for a birth date.")
     private Date dateOfBirth ;
+
     @Column
+    @NotNull(message = "Name cannot be null.")
+    @Email(message = "Enter a valid email address.")
     private String email;
+
     @Column
+    @NotNull(message = "Name cannot be null.")
+    @Size(min = 8,message = "Too Short Password")
     private String password ;
+
     @Column
     private String nationalId ;
+
     @Column
     private boolean enabled ;
-
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Certificates> certificates = new ArrayList<>();

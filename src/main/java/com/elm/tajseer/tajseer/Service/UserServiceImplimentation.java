@@ -4,6 +4,11 @@ import com.elm.tajseer.tajseer.Model.Organization;
 import com.elm.tajseer.tajseer.Model.Users;
 import com.elm.tajseer.tajseer.Repository.OrganizationRepository;
 import com.elm.tajseer.tajseer.Repository.UserRepository;
+import com.elm.tajseer.tajseer.dto.ObjectMapperUtils;
+import com.elm.tajseer.tajseer.dto.UsersDto;
+import org.modelmapper.ModelMapper;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,12 +19,14 @@ import java.util.List;
 public class UserServiceImplimentation implements UserService {
 
 @Autowired
-private UserRepository userRepository ;
+public UserRepository userRepository ;
 @Autowired
-private OrganizationRepository organizationRepository ;
+public OrganizationRepository organizationRepository ;
+@Autowired
+public ModelMapper modelMapper;
 
     @Override
-    public String addIndividual(Users users) {
+    public String addUsers(Users users) {
         users.setPassword(new BCryptPasswordEncoder().encode(users.getPassword()));
         userRepository.save(users);
         return "Individual added Successfully";
@@ -30,20 +37,24 @@ private OrganizationRepository organizationRepository ;
         return "Orgnization added Successfully";
     }
 
-    @Override
-    public Organization findByOrganizationId(String organizationName) {
-        return organizationRepository.findByOrganizationId(organizationName);
+    public UsersDto getUser(int userId) {
+        Users users = userRepository.findById(userId).get();
+        UsersDto userDTO = modelMapper.map(users, UsersDto.class);
+        return userDTO;
     }
 
     @Override
-    public List<Users> getAllUsers() {
-        return userRepository.findAll();
+    public Organization findByOrganizationName(String organizationName) {
+        return organizationRepository.findByOrganizationName(organizationName);
     }
 
     @Override
-    public Users getUser(int userId) {
-        return userRepository.findById(userId).get();
+    public List<UsersDto> getAllUsers() {
+        List<Users> users = userRepository.findAll();
+        List<UsersDto> usersDto = ObjectMapperUtils.mapAll(users,UsersDto.class);
+        return usersDto;
     }
+
 
     @Override
     public Users updateUser(Users users, int userId) {
@@ -56,4 +67,8 @@ private OrganizationRepository organizationRepository ;
         userRepository.deleteById(userId);
     }
 
+    @Override
+    public void deleteAllUsers() {
+        userRepository.deleteAll();
+    }
 }

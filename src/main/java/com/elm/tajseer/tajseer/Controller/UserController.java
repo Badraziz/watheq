@@ -5,14 +5,9 @@ import com.elm.tajseer.tajseer.Model.Organization;
 import com.elm.tajseer.tajseer.Model.Users;
 import com.elm.tajseer.tajseer.Repository.OrganizationRepository;
 import com.elm.tajseer.tajseer.Service.UserService;
+import com.elm.tajseer.tajseer.dto.UsersDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -20,7 +15,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userservice ;
+    private UserService userService ;
     @Autowired
     private OrganizationRepository organizationRepository ;
 
@@ -30,34 +25,42 @@ public class UserController {
         return "index";
     }
 
-    @PostMapping(value = "/AddIndividual")
-    public String addIndividual(@RequestBody Users users){
-        return userservice.addIndividual(users) ;
+    @PostMapping(value = "/AddUsers")
+    public String addUsers(@RequestBody Users users){
+        return userService.addUsers(users) ;
     }
 
     @PostMapping(value = "/AddOrganization")
     public String addOrganization(@RequestBody Organization organization){
-        return userservice.addOrganization(organization) ;
-    }
-
-    @GetMapping(value = "/AddUserOfOrganization/{organizationName}")
-    public Organization findOrganization2(@PathVariable("organizationName")  String organizationName){
-        return userservice.findByOrganizationId(organizationName) ;
+        return userService.addOrganization(organization) ;
     }
     @GetMapping(value = "/GetAllUsers")
-    public List<Users> getAllUsers() {
-        return userservice.getAllUsers();
+    public List<UsersDto> getAllUsers() {
+        return userService.getAllUsers();
     }
+
+    @GetMapping(value = "/GetUser/{userID}")
+    public UsersDto getUser(@PathVariable("userID") int userId) {
+        return userService.getUser(userId);
+    }
+
 
     @PutMapping(value = "/UpdateUser/{userId}")
     public Users updateUser(@RequestBody Users users, @PathVariable("userId") int userId) {
-        return userservice.updateUser(users, userId);
+        return userService.updateUser(users, userId);
     }
 
     @DeleteMapping(value = "/DeleteUser/{userID}")
     public void deleteUser(@PathVariable("userID") int userID) {
-        userservice.deleteUser(userID);
+        userService.deleteUser(userID);
     }
+
+    @GetMapping(value = "/findOrganization/{organizationName}")
+    public Organization findOrganization(@PathVariable("organizationName")  String organizationName){
+        return userService.findByOrganizationName(organizationName) ;
+    }
+
+
 
 //    @RequestMapping(value="/login", method = RequestMethod.GET)
 //    public String login(Model model, String error, String logout) {
